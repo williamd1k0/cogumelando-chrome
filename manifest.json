@@ -3,7 +3,7 @@
 
   "name": "Cogumelando",
   "description": "Extensão para Google Chrome do Cogumelando",
-  "version": "0.2",
+  "version": "0.3",
   "icons": { "16": "icon16.png",
            "48": "icon48.png",
           "128": "icon128.png" },
@@ -12,7 +12,7 @@
     "default_popup": "popup.html"
   },
   "permissions": [
-    "tabs",
+    "alarms",
     "*://*/*"
   ],
   "background": {

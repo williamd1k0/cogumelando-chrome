@@ -2,14 +2,27 @@
 var twitch = {
     name: 'Cogumelando',
     username: 'cogumelandooficial',
-    ajaxInterval: 180000//300000 // 5 minutos
+    ajaxInterval: 1//300000 // 5 minutos
+
 }
 
+chrome.runtime.onStartup.addListener(function () {
+    chrome.alarms.create("mainLoop", {delayInMinutes: 0.1,periodInMinutes: 1});
+});
+$.ajaxSetup({cache:false});
 noConnect();
+
+/*@deprecated
+twitch.createLoop();
 getTwitch(twitch.username);
 twitch.mainLoop = setInterval(function(){
     getTwitch(twitch.username);
 },twitch.ajaxInterval);
+*/
+
+chrome.alarms.onAlarm.addListener(function(alarm) {
+    getTwitch(twitch.username);
+});
 
 function mythTwitch(twitchJson){
     twitch.channel = twitchJson;
