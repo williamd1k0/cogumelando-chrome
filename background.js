@@ -12,9 +12,8 @@ var twitch = {
     }
 }
 
-noConnect();
-
 chrome.runtime.onStartup.addListener(function () {
+    noConnect();
     chrome.alarms.create("mainLoop", {delayInMinutes: 0.1,periodInMinutes: 1});
 });
 $.ajaxSetup({cache:false});
@@ -35,6 +34,15 @@ function mythTwitch(twitchJson){
     twitch.channel = twitchJson;
 
     if(twitch.channel.stream){
+        chrome.browserAction.getBadgeText({},function(e){
+            console.log(e);
+            if(e != twitch.streamTitle){
+                var notify = new Howl({
+                  urls: ['adanado.ogg']
+                }).play();
+            }
+        });
+
         twitch.game = twitch.channel.stream.game;
         twitch.onStream = true;
         chrome.browserAction.setBadgeText({text:twitch.streamTitle});
