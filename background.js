@@ -4,15 +4,11 @@ var twitch = {
     username: 'cogumelandooficial',
     streamTitle: 'LIVE',
     offAirTitle: 'OFF',
-    offAirMessage: 'Off-air',
-    onStream: false,
-    ajaxInterval: 1,//300000 // 5 minutos
-    getChannel: function t(){
-        return this.onStream ? this.channel.stream : false;
-    }
+    offAirMessage: 'Off-air'
 }
 
 chrome.runtime.onStartup.addListener(function () {
+    localStorage.removeItem('onStream');
     if(localStorage.length == 0){
         localStorage.setItem('persist',true);
         localStorage.setItem('sound',true);
@@ -38,25 +34,29 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
 function mythTwitch(twitchJson){
     twitch.channel = twitchJson;
 
-    if(twitch.channel.stream){
+    if(twitchJson.stream){
+        localStorage.setItem('onStream',true);
+        localStorage.setItem('channel',JSON.stringify(twitchJson.stream));
+
+        twitch.game = twitchJson.stream.game;
+        chrome.browserAction.setBadgeBackgroundColor({color: "#0d0"});
+        chrome.browserAction.setBadgeText({text:twitch.streamTitle});
+        chrome.browserAction.setTitle({title:twitch.name+' | '+twitch.game});
+
         chrome.browserAction.getBadgeText({},function(e){
             console.log(e);
             if(e != twitch.streamTitle && localStorage.sound){
                 var notify = new Howl({
-                  urls: ['adanado.ogg']
+                    urls: ['adanado.ogg']
                 }).play();
             }
         });
-
-        twitch.game = twitch.channel.stream.game;
-        twitch.onStream = true;
-        chrome.browserAction.setBadgeText({text:twitch.streamTitle});
-        chrome.browserAction.setBadgeBackgroundColor({color: "#0d0"});
-        chrome.browserAction.setTitle({title:twitch.name+' | '+twitch.game});
         console.log("Stream");
+
     }else{
-        chrome.browserAction.setBadgeText({text:twitch.offAirTitle});
+        localStorage.removeItem('onStream');
         chrome.browserAction.setBadgeBackgroundColor({color: "#d00"});
+        chrome.browserAction.setBadgeText({text:twitch.offAirTitle});
         chrome.browserAction.setTitle({title:twitch.name+' | '+twitch.offAirMessage});
         console.log("Off-air");
     }

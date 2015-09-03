@@ -1,4 +1,4 @@
-
+/* @deprecated
 var mythTwitch = chrome.extension.getBackgroundPage();
 console.log("Retorno do background "+mythTwitch);
 
@@ -8,14 +8,19 @@ try{
     if(stream){
         console.log("integração popup/background");
     }
-}catch(e){
+}catch(e){}
+*/
 
+if(localStorage.onStream){
+    var stream = JSON.parse(localStorage.channel);
+    var twitchView = document.getElementsByClassName('twitch');
+    twitchView[0].innerHTML = '<p>'+stream.game+'</p>';
+    twitchView[1].innerHTML = `
+        <p>
+            <img style="width:95%" src="http://static-cdn.jtvnw.net/previews-ttv/live_user_cogumelandooficial-320x180.jpg">
+        </p>`;
+    twitchView[2].innerHTML = '<p><small>'+stream.channel.status+'</small></p>';
 }
-
-var twitchView = document.getElementById('twitch');
-//twitchView.innerHTML = `<img src="static-cdn.jtvnw.net/previews-ttv/live_user_cogumelandooficial-320x180.jpg">`;
-//twitchView.innerHTML = `<p><img style="width:95%" src="http://static-cdn.jtvnw.net/ttv-static/404_preview-320x180.jpg"></p>`;
-
 var disableSound = document.getElementById('sound');
 disableSound.checked = localStorage.sound ? false : true;
 disableSound.onchange = function(){
