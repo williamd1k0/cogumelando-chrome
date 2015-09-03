@@ -37,12 +37,7 @@ function mythTwitch(twitchJson){
     if(twitchJson.stream){
         localStorage.setItem('onStream',true);
         localStorage.setItem('channel',JSON.stringify(twitchJson.stream));
-
-        twitch.game = twitchJson.stream.game;
-        chrome.browserAction.setBadgeBackgroundColor({color: "#0d0"});
-        chrome.browserAction.setBadgeText({text:twitch.streamTitle});
-        chrome.browserAction.setTitle({title:twitch.name+' | '+twitch.game});
-
+        
         chrome.browserAction.getBadgeText({},function(e){
             console.log(e);
             if(e != twitch.streamTitle && localStorage.sound){
@@ -51,6 +46,12 @@ function mythTwitch(twitchJson){
                 }).play();
             }
         });
+        
+        twitch.game = twitchJson.stream.game;
+        chrome.browserAction.setBadgeBackgroundColor({color: "#0d0"});
+        chrome.browserAction.setBadgeText({text:twitch.streamTitle});
+        chrome.browserAction.setTitle({title:twitch.name+' | '+twitch.game});
+
         console.log("Stream");
 
     }else{
