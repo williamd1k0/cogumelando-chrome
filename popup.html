@@ -35,7 +35,11 @@
         text-decoration:none;
      }
 
-	.corolho {
+    #live{
+
+    }
+
+	.corolho{
 	vertical-align:top;
 	text-align: left;
 		/*width:180px;*/
@@ -97,15 +101,32 @@
             transition:background-position 0s ease;
 }
 
-.corolho:hover,
-.corolho:focus {
+.corolho:hover {
     color:#fff;
-	   box-shadow: 0px 5px 10px 1px #AAA;
+	   box-shadow: 0px 2px 5px 1px #1e4b1a;
     background-position:0 0, 0 0;
     -webkit-transition-duration:0.5s;
        -moz-transition-duration:0.5s;
             transition-duration:0.5s;
 }
+        .twitch{
+            font-weight: bold;
+        }
+        #menu{
+            margin: -5px auto -12px auto;
+            height: 18px;
+        }
+        small{
+            font-size: 12px;
+            color: #2d9a48;
+        }
+        div#slogan{
+            margin-top: -11px
+        }
+        .live:focus{
+            outline-color: #4FF946;;
+            outline-style: dotted;
+        }
     </style>
 
   </head>
@@ -113,11 +134,12 @@
 
 	<div id="window">
         <img style="width:100%" src="cogulogo.png"> </img> <br>
-        <div style="center"><i>A princesa está em outro castelo</i></div>
-        <b>
+        <div id="slogan" style="center"><i>A princesa está em outro castelo</i></div>
+        <p id="menu">
 
+        </p>
 	    <p>
-            <a class="corolho" href="http://www.twitch.tv/cogumelandooficial/" target="_blank" title="Canal do Twitch">
+            <a class="corolho live" href="http://www.twitch.tv/cogumelandooficial/" target="_blank" title="Canal do Twitch">
                 <img class="icon" src="live.png"></a>
             <a class="corolho" href="https://www.facebook.com/Cogumelando" target="_blank" title="Página do Facebook">
                 <img class="icon" src="face.png"></a>
@@ -139,10 +161,10 @@
         </div>
     </div>
 
-    <small>
-        <input type="checkbox" id="sound" value="">
-        Desabilitar som
-    </small>
+    <span>
+        <input type="checkbox" id="sound" name="sound" value="">
+        <label for="sound">Desabilitar som</label>
+    </span>
 
   </body>
   <script src="popup.js" charset="utf-8"></script>
