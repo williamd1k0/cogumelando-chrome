@@ -14,10 +14,12 @@
   "options_page": "options.html",
   "permissions": [
     "alarms",
+    "notifications",
+    "tabs",
     "*://*/*"
   ],
   "background": {
       "page": "background.html",
       "persistent": false
-    }
+  }
 }

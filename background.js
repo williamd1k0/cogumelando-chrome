@@ -1,3 +1,16 @@
+var debug = JSON.parse(localStorage.channel);
+var liveNotify = new Notification('ADANADO!!', {
+      icon: 'icon128.png',
+      body: "É TEMPO! Começando "+debug.game+" ao vivo agora!",
+      silent: true
+    });
+
+liveNotify.onclick = function(){
+    chrome.tabs.create({'url': 'http://www.twitch.tv/cogumelandooficial/'}, function(tab){/*callback*/}); 
+};
+setTimeout(function(){
+    liveNotify.close();
+},10000); 
 
 var twitch = {
     name: 'Cogumelando',
