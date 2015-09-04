@@ -17,7 +17,7 @@ if(localStorage.onStream){
     twitchView[0].innerHTML = '<p>'+stream.game+'</p>';
     twitchView[1].innerHTML = `
         <p>
-            <img style="width:95%" src="http://static-cdn.jtvnw.net/previews-ttv/live_user_cogumelandooficial-320x180.jpg">
+            <img style="width:95%" src="${stream.preview.medium}">
         </p>`;
     twitchView[2].innerHTML = '<p>'+stream.channel.status+'</p>';
 }

@@ -1,3 +1,7 @@
+chrome.runtime.onInstalled.addListener(function(details){
+    chrome.alarms.create("mainLoop", {delayInMinutes: 0.3,periodInMinutes: 1});
+});
+
 // objeto com os dados mais importantes (não persistentes)
 var twitch = {
     name: 'Cogumelando',

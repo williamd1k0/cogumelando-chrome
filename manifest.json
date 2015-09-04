@@ -21,5 +21,6 @@
   "background": {
       "page": "background.html",
       "persistent": false
-  }
+  },
+  "homepage_url": "http://www.cogumelando.com.br/"
 }
