@@ -1,30 +1,19 @@
-var debug = JSON.parse(localStorage.channel);
-var liveNotify = new Notification('ADANADO!!', {
-      icon: 'icon128.png',
-      body: "É TEMPO! Começando "+debug.game+" ao vivo agora!",
-      silent: true
-    });
-
-liveNotify.onclick = function(){
-    chrome.tabs.create({'url': 'http://www.twitch.tv/cogumelandooficial/'}, function(tab){/*callback*/}); 
-};
-setTimeout(function(){
-    liveNotify.close();
-},10000); 
 
 var twitch = {
     name: 'Cogumelando',
     username: 'cogumelandooficial',
     streamTitle: 'LIVE',
     offAirTitle: 'OFF',
-    offAirMessage: 'Off-air'
+    offAirMessage: 'Off-air',
+    notifySfx: 'adanado.ogg'
 }
 
-chrome.runtime.onStartup.addListener(function () {
+chrome.runtime.onStartup.addListener(function (){
     localStorage.removeItem('onStream');
     if(localStorage.length == 0){
         localStorage.setItem('persist',true);
         localStorage.setItem('sound',true);
+        localStorage.setItem('notify',true);
         localStorage.setItem('interval',1);
     }
     noConnect();
@@ -50,17 +39,33 @@ function mythTwitch(twitchJson){
     if(twitchJson.stream){
         localStorage.setItem('onStream',true);
         localStorage.setItem('channel',JSON.stringify(twitchJson.stream));
-        
+        twitch.game = twitchJson.stream.game;
+
         chrome.browserAction.getBadgeText({},function(e){
             console.log(e);
-            if(e != twitch.streamTitle && localStorage.sound){
-                var notify = new Howl({
-                    urls: ['adanado.ogg']
-                }).play();
+            if(e != twitch.streamTitle){
+                if(localStorage.notify){
+                    var liveNotify = new Notification('ADANADO!!', {
+                          icon: 'live.png',
+                          body: "É TEMPO! Começando "+twitch.game+" ao vivo agora!",
+                          silent: true
+                        });
+
+                    liveNotify.onclick = function(){
+                        chrome.tabs.create({'url': 'http://www.twitch.tv/cogumelandooficial/'}, function(tab){/*callback*/});
+                    };
+                    setTimeout(function(){
+                        liveNotify.close();
+                    },10000);
+                }
+                if (localStorage.sound) {
+                    var notify = new Howl({
+                        urls: [twitch.notifySfx]
+                    }).play();
+                }
             }
         });
-        
-        twitch.game = twitchJson.stream.game;
+
         chrome.browserAction.setBadgeBackgroundColor({color: "#0d0"});
         chrome.browserAction.setBadgeText({text:twitch.streamTitle});
         chrome.browserAction.setTitle({title:twitch.name+' | '+twitch.game});
