@@ -1,22 +1,112 @@
-<style>
-    body {
-        background-color: #0f170e;
-
-    }
-    div#options{
-        margin: 0 auto;
-        border: solid 5px white;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-image: url(LEVELGUIDE.png);
-        width: 800px;
-        height: 600px;
-    }
-</style>
-<body>
-<div id="options">
-hello world
-
-</div>
-
-</body>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Cogumelando | Opções</title>
+        <style>
+            body {
+                background-color: #4B7945;
+            }
+            div#options{
+                color: #fff;
+                margin: 0 auto;
+                border: solid 5px white;
+                    border-radius: 4px;
+                background-repeat: repeat-x;
+                background-image: url(leveloptions.png);
+                background-size: 1000px;
+                width: 770px;
+                height: 590px;
+                padding: 0 27px;
+            }
+            h2, h3{
+                text-shadow: 1px 1px 2px #0B0B35;
+            }
+            button, img{
+                cursor: -webkit-grabbing;
+            }
+            .loop button {
+                width: 55px
+            }
+            button{
+                background-color: #DEBD56;
+                border: solid 2px #BB7517;
+                color: #994806;
+                padding: 4px;
+                border-radius: 4px;
+            }
+            button.pressed {
+                background-color: #449E3B;
+                color: #fff;
+                border-color: #89B72B;
+                box-shadow: inset 1px 1px 1px green;
+                text-shadow: 2px 1px 2px green;
+            }
+            div.button{
+                display: none;
+                border: solid 2px red;
+                position: relative;
+                width: 30px;
+                height: 30px;
+                cursor: help;
+            }
+            #but1{
+                top: 36%;
+                left: 43.9%;
+            }
+            #but2{
+                top: 52.9%;
+                left: 18.9%;
+            }
+            #but3{
+                top: 46.9%;
+                left: 39.8%;
+            }
+            #but4{
+                top: 41.2%;
+                left: 48.1%;
+            }
+            li{
+                list-style: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="options">
+            <h2>
+                Cogumelando | Opções
+            </h2>
+            <li>
+                <h3>Sons</h3>
+                <button type="button" name="sound">Ativado</button>
+                <button type="button" name="sound">Desativado</button>
+            </li>
+            <li>
+                <h3>Notificações</h3>
+                <button type="button" name="notify">Ativado</button>
+                <button type="button" name="notify">Desativado</button>
+            </li>
+            <li class="loop">
+                <h3>Verificar lives a cada:</h3>
+                <button title="Recomendável" type="button" name="loop">1 min</button>
+                <button type="button" name="loop">2 min</button>
+                <button type="button" name="loop">5 min</button>
+                <br>
+                <button style="margin-top:3px" type="button" name="loop">10 min</button>
+                <button type="button" name="loop">20 min</button>
+                <button type="button" name="loop">30 min</button>
+            </li>
+            <li>
+                <h3>Redefinir tudo</h3>
+                <img id="reset" style="width:30px" src="pow.png">
+            </li>
+        </div>
+        <div>
+            <div class="button" id="but1"></div>
+            <div class="button" id="but2"></div>
+            <div class="button" id="but3"></div>
+            <div class="button" id="but4"></div>
+        </div>
+    </body>
+    <script src="options.js" charset="utf-8"></script>
+</html>
