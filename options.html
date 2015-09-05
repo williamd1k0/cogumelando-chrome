@@ -15,12 +15,18 @@
                 background-repeat: repeat-x;
                 background-image: url(leveloptions.png);
                 background-size: 1000px;
-                width: 800px;
+                width: 770px;
                 height: 590px;
-                padding: 0 15px;
+                padding: 0 27px;
             }
-            h3 {
+            h2, h3{
                 text-shadow: 1px 1px 2px #0B0B35;
+            }
+            button, img{
+                cursor: -webkit-grabbing;
+            }
+            .loop button {
+                width: 55px
             }
             button{
                 background-color: #DEBD56;
@@ -79,6 +85,20 @@
                 <h3>Notificações</h3>
                 <button type="button" name="notify">Ativado</button>
                 <button type="button" name="notify">Desativado</button>
+            </li>
+            <li class="loop">
+                <h3>Verificar lives a cada:</h3>
+                <button title="Recomendável" type="button" name="loop">1 min</button>
+                <button type="button" name="loop">2 min</button>
+                <button type="button" name="loop">5 min</button>
+                <br>
+                <button style="margin-top:3px" type="button" name="loop">10 min</button>
+                <button type="button" name="loop">20 min</button>
+                <button type="button" name="loop">30 min</button>
+            </li>
+            <li>
+                <h3>Redefinir tudo</h3>
+                <img id="reset" style="width:30px" src="pow.png">
             </li>
         </div>
         <div>
