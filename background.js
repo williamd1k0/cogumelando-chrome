@@ -1,5 +1,6 @@
 chrome.runtime.onInstalled.addListener(function(details){
     chrome.alarms.create("mainLoop", {delayInMinutes: 0.3,periodInMinutes: 1});
+    mythInit();
 });
 
 // objeto com os dados mais importantes (não persistentes)
@@ -17,13 +18,7 @@ chrome.runtime.onStartup.addListener(function (){
     // força o estado da live pra Off-air por causa do popup
     localStorage.removeItem('onStream');
     // primeira inicialização
-    if(localStorage.length == 0){
-        // cria os dados persistentes
-        localStorage.setItem('persist',true);
-        localStorage.setItem('sound',true);
-        localStorage.setItem('notify',true);
-        localStorage.setItem('interval',1);
-    }
+    mythInit();
     // altera o botão do popup
     noConnect();
     // cria o evento de alarm (loop principal de checagem)
@@ -49,6 +44,22 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
     // checagem do canal do twitch
     getTwitch(twitch.username);
 });
+
+// Método que inicializa os dados persistentes
+function mythInit(){
+    if(localStorage.length == 0){
+        // cria os dados persistentes
+        localStorage.setItem('persist',true);
+        localStorage.setItem('sound',true);
+        localStorage.setItem('notify',true);
+        localStorage.setItem('interval',1);
+        var notifyInit = new Notification('Cogumelando', {
+              icon: 'icon128.png',
+              body: "Notificações estão ativadas, se quiser desativar entre nas opções.",
+              silent: true
+        });
+    }
+}
 
 // Método que se executa caso o request ajax tenha sucesso
 // @twitchJson: o retorno do request ajax
