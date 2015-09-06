@@ -36,6 +36,8 @@ function configLoop(element, min){
     element.onclick = function(){
         this.className = "pressed";
         localStorage.setItem('interval',min);
+        chrome.alarms.clearAll();
+        chrome.alarms.create("mainLoop", {delayInMinutes: 0.3,periodInMinutes: min});
         for (var i = 0; i < loop.length; i++) {
             if(loop[i].innerHTML !== min+" min"){
                 loop[i].className = '';

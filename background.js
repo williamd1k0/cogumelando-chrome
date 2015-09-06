@@ -24,7 +24,7 @@ chrome.runtime.onStartup.addListener(function (){
     // cria o evento de alarm (loop principal de checagem)
     // delayInMinutes: tempo antes da primeira checagem
     // periodInMinutes: tempo entre uma checagem e outra
-    chrome.alarms.create("mainLoop", {delayInMinutes: 0.3,periodInMinutes: 1});
+    chrome.alarms.create("mainLoop", {delayInMinutes: 0.3,periodInMinutes: parseInt(localStorage.interval)});
 });
 
 // força a desativação do cache do ajax
@@ -53,11 +53,14 @@ function mythInit(){
         localStorage.setItem('sound',true);
         localStorage.setItem('notify',true);
         localStorage.setItem('interval',1);
-        var notifyInit = new Notification('Cogumelando', {
-              icon: 'icon128.png',
-              body: "Notificações estão ativadas, se quiser desativar entre nas opções.",
-              silent: true
-        });
+        var initNotify = new Notification('Cogumelando', {
+                icon: 'icon128.png',
+                body: "Notificações estão ativadas, se quiser desativar entre nas opções.",
+                silent: true
+            });
+        initNotify.onclick = function(){
+            chrome.tabs.create({'url': 'options.html'}, function(tab){/*callback*/});
+        };
     }
 }
 
@@ -81,9 +84,9 @@ function mythTwitch(twitchJson){
                 // se as notificações etiverem ativadas
                 if(localStorage.notify){
                     var liveNotify = new Notification('ADANADO!!', {
-                          icon: 'icon128.png',
-                          body: "É TEMPO! Começando "+twitch.game+" ao vivo agora!",
-                          silent: true
+                            icon: 'icon128.png',
+                            body: "É TEMPO! Começando "+twitch.game+" ao vivo agora!",
+                            silent: true
                         });
 
                     liveNotify.onclick = function(){
