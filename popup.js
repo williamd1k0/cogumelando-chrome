@@ -11,15 +11,26 @@ if(localStorage.onStream){
     // recebe as informações da live
     var stream = JSON.parse(localStorage.channel),
         twitchView = document.getElementsByClassName('twitch');
+        liveType = document.getElementsByTagName('img')[0];
     // insere coisas da live no popup (título,nome do jogo, screenshot)
     buttons[0].className = 'corolho live';
     buttons[0].focus();
+
+    var liveTitle = stream.channel.status;
+    if(liveTitle.search("DAFM") !== -1){
+        liveType.className = 'live-type';
+        liveType.src = 'dafm.png';
+    }else if(liveTitle.search("Game Quest") !== -1){
+        liveType.className = 'live-type';
+        liveType.src = 'cogugq.png';
+    }
+
     twitchView[0].innerHTML = stream.game != null ? '<p>'+stream.game+'</p>' : '';
     twitchView[1].innerHTML = `
         <p>
             <img style="width:95%" src="${stream.preview.medium}">
         </p>`;
-    twitchView[2].innerHTML = '<p>'+stream.channel.status+'</p>';
+    twitchView[2].innerHTML = '<p>'+liveTitle+'</p>';
 }
 
 // loop para criar os eventos de hover dos botões
