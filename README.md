@@ -1,8 +1,10 @@
-# Cogumelando Extension
+# Extensão do Cogumelando
+
+[English](https://github.com/williamd1k0/cogumelando-chrome/blob/master/README-EN.md)
 
     Extensão do Cogumelando para Google Chrome e Opera.
 
-### Features:
+### Recursos:
 
 1. Background:
     * Checar lives a cada X minutos (valor inicial: 1 minuto).
