@@ -22,7 +22,7 @@
             h2, h3{
                 text-shadow: 1px 1px 2px #0B0B35;
             }
-            button, img{
+            button, img#reset{
                 cursor: -webkit-grabbing;
             }
             .loop button {
@@ -69,6 +69,33 @@
             li{
                 list-style: none;
             }
+            #author{
+                float: right;
+                position: relative;
+                bottom: -15%;
+                text-shadow: 1px 1px 1px black;
+                padding: 1px;
+            }
+            a{
+                color: #fff;
+                text-decoration: none;
+            }
+            #author li{
+                width: 112px;
+                margin-bottom: 2px;
+                border-radius: 3px;
+                background-color: rgba(0, 0, 0, 0.38);
+            }#author li:hover{
+                background-color: rgba(0, 0, 0, 0.5);
+            }
+            #author img {
+                margin-top: 1px;
+                margin-bottom: -2px;
+            }
+            #author span {
+                position: relative;
+                bottom: 5px;
+            }
         </style>
     </head>
     <body>
@@ -100,7 +127,23 @@
                 <h3>Redefinir tudo</h3>
                 <img id="reset" style="width:30px" src="pow.png">
             </li>
+
+            <div id="author">
+                <li title="Desenvolvedor">
+                    <a target="_blank" href="https://github.com/williamd1k0">
+                    <img src="tumeo.png">
+                    <span>William Tuméo</span>
+                    </a>
+                </li>
+                <li title="Designer">
+                    <a target="_blank" href="http://www.lucasflicky.com">
+                    <img src="hood.png">
+                    <span>Lucas Flicky</span>
+                    </a>
+                </li>
+            </div>
         </div>
+
         <div>
             <div class="button" id="but1"></div>
             <div class="button" id="but2"></div>
