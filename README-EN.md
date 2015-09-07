@@ -18,9 +18,9 @@
     * Displays livestream info if it's online (Game name and stream title) and a thumbnail.
 
 3. Button:
-    * Displays ` OFF ` for Off-Air
-    * Displays ` LIVE ` for Ongoing Stream and displays game name on hover.
-    * Displays `...` on startup or connection malfunction (Open an issue in case this occurs often).
+    * Displays <kbd>OFF</kbd> for Off-Air
+    * Displays <kbd>LIVE</kbd> for Ongoing Stream and displays game name on hover.
+    * Displays <kbd>...</kbd> on startup or connection malfunction (Open an issue in case this occurs often).
 
 
 :computer: [William Tuméo](https://github.com/williamd1k0)
