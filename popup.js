@@ -14,7 +14,7 @@ if(localStorage.onStream){
     // insere coisas da live no popup (título,nome do jogo, screenshot)
     buttons[0].className = 'corolho live';
     buttons[0].focus();
-    twitchView[0].innerHTML = '<p>'+stream.game+'</p>';
+    twitchView[0].innerHTML = stream.game != null ? '<p>'+stream.game+'</p>' : '';
     twitchView[1].innerHTML = `
         <p>
             <img style="width:95%" src="${stream.preview.medium}">
