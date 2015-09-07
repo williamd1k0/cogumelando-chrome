@@ -77,6 +77,8 @@ function configButton(element,storage){
 }
 
 function mythReset(){
+    chrome.alarms.clearAll();
+    chrome.alarms.create("mainLoop", {delayInMinutes: 0.3,periodInMinutes: 1});
     localStorage.clear();
     localStorage.setItem('persist',true);
     localStorage.setItem('sound',true);
