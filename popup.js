@@ -2,7 +2,9 @@
 var buttons = document.getElementsByClassName('corolho'),
     menu = document.getElementById('menu'),
     buttonsHelp = ['Canal do Twitch','Página do Facebook','Página do Twitter','Site oficial','Opções'],
+    buttonsUrl = ['http://www.twitch.tv/cogumelandooficial/','https://www.facebook.com/Cogumelando','https://twitter.com/cogumelandosite','http://www.cogumelando.com.br/','options.html'],
     disableSound = document.getElementById('sound');
+
 // força o botão do twitch a ser somente da classe corolho
 buttons[0].className = 'corolho';
 
@@ -32,6 +34,22 @@ if(localStorage.onStream){
         </p>`;
     twitchView[2].innerHTML = '<p>'+liveTitle+'</p>';
 }
+
+buttons[0].onclick = function(){
+    chrome.tabs.create({'url': buttonsUrl[0]});
+};
+buttons[1].onclick = function(){
+    chrome.tabs.create({'url': buttonsUrl[1]});
+};
+buttons[2].onclick = function(){
+    chrome.tabs.create({'url': buttonsUrl[2]});
+};
+buttons[3].onclick = function(){
+    chrome.tabs.create({'url': buttonsUrl[3]});
+};
+buttons[4].onclick = function(){
+    chrome.tabs.create({'url': buttonsUrl[4]});
+};
 
 // loop para criar os eventos de hover dos botões
 for (var i = 0; i < buttons.length; i++) {
