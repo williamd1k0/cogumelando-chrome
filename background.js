@@ -47,6 +47,8 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
 
 // Método que inicializa os dados persistentes
 function mythInit(){
+    chrome.browserAction.setBadgeText({text:" "});
+    
     if(localStorage.length == 0){
         // cria os dados persistentes
         localStorage.setItem('persist',true);
@@ -105,7 +107,6 @@ function mythTwitch(twitchJson){
 
         // altera as informações do botão
         chrome.browserAction.setBadgeBackgroundColor({color: "#0d0"}); // cor
-        chrome.browserAction.setBadgeText({text:" "}); // título
         chrome.browserAction.setTitle({title:twitch.name+' | '+twitch.game}); // tooltip
         console.log("Stream");
 
@@ -114,7 +115,6 @@ function mythTwitch(twitchJson){
         localStorage.removeItem('onStream');
         // altera as informações do botão (parecido com o que está acima)
         chrome.browserAction.setBadgeBackgroundColor({color: "#d00"});
-        chrome.browserAction.setBadgeText({text:" "});
         chrome.browserAction.setTitle({title:twitch.name+' | '+twitch.offAirMessage});
         console.log("Off-air");
     }
@@ -142,7 +142,6 @@ function getTwitch(username){
 
 // Método que altera o botão para o caso do ajax falhar
 function noConnect(){
-    chrome.browserAction.setBadgeText({text:" "});
     chrome.browserAction.setBadgeBackgroundColor({color: "#999"});
     chrome.browserAction.setTitle({title:twitch.name});
 }
