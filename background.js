@@ -69,42 +69,39 @@ function mythInit(){
 function mythTwitch(twitchJson){
     // checa se está acontecendo uma live
     if(twitchJson.stream){ // live acontecendo
-        // muda o estado de live para true
-        localStorage.setItem('onStream',true);
         // joga todos os dados da live nos dados persistentes
         localStorage.setItem('channel',JSON.stringify(twitchJson.stream));
         // cria um link para o nome do jogo
         twitch.game = twitchJson.stream.game;
 
-        // obtem o titulo do botão e executa um callback
-        chrome.browserAction.getBadgeText({},function(e){
-            console.log(e);
-            // faz uma checagem psa saber se no loop anterior já estava em live
-            if(e != twitch.streamTitle){
-                // se as notificações etiverem ativadas
-                if(localStorage.notify){
-                    var liveNotify = new Notification('ADANADO!!', {
-                            icon: 'icon128.png',
-                            body: "É TEMPO! Começando "+twitch.game+" ao vivo agora!",
-                            silent: true
-                        });
+        // faz uma checagem pra saber se no loop anterior já estava em live
+        if(!localStorage.onStream){
+            // muda o estado de live para true
+            localStorage.setItem('onStream',true);
 
-                    liveNotify.onclick = function(){
-                        chrome.tabs.create({'url': 'http://www.twitch.tv/cogumelandooficial/'}, function(tab){/*callback*/});
-                    };
-                    setTimeout(function(){
-                        liveNotify.close();
-                    },10000);
-                }
-                // se as notificações sonoras estiverem ativadas
-                if (localStorage.sound) {
-                    // toca o ADANADO
-                    var notify = new Howl({
-                        urls: [twitch.notifySfx]
-                    }).play();
-                }
+            // se as notificações estiverem ativadas
+            if(localStorage.notify){
+                var liveNotify = new Notification('ADANADO!!', {
+                        icon: 'icon128.png',
+                        body: "É TEMPO! Começando "+twitch.game+" ao vivo agora!",
+                        silent: true
+                    });
+
+                liveNotify.onclick = function(){
+                    chrome.tabs.create({'url': 'http://www.twitch.tv/cogumelandooficial/'}, function(tab){/*callback*/});
+                };
+                setTimeout(function(){
+                    liveNotify.close();
+                },10000);
             }
-        });
+            // se as notificações sonoras estiverem ativadas
+            if (localStorage.sound) {
+                // toca o ADANADO
+                var notify = new Howl({
+                    urls: [twitch.notifySfx]
+                }).play();
+            }
+        }
 
         // altera as informações do botão
         chrome.browserAction.setBadgeBackgroundColor({color: "#0d0"}); // cor
