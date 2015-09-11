@@ -1,8 +1,10 @@
-# Cogumelando Extension
+# Extensão do Cogumelando
 
-Extensão do Cogumelando para Google Chrome e Opera.
+[English](https://github.com/williamd1k0/cogumelando-chrome/blob/master/README-EN.md)
 
-## Features:
+    Extensão do Cogumelando para Google Chrome e Opera.
+
+### Recursos:
 
 1. Background:
     * Checar lives a cada X minutos (valor inicial: 1 minuto).
@@ -11,4 +13,14 @@ Extensão do Cogumelando para Google Chrome e Opera.
     * Notificações sonoras (valor inicial: ativado).
 2. Popup:
     * Links úteis do Cogumelando (Twitch, Facebook, Twitter e Site Oficial).
-    * 
+    * Atalho para desativar o som das notificações.
+    * Se estiver ao-vivo, é exibido informações da live (nome do jogo e título da live) e uma screenshot.
+3. Botão:
+    * Exibe <kbd>OFF</kbd> para Off-air.
+    * Exibe <kbd>LIVE</kbd> para ao-vivo e exibe o nome do jogo on-hover.
+    * Exibe <kbd>...</kbd> na inicialização ou quando falha na conexão (abrir issue caso esteja ocorrendo com frequência).
+
+
+:computer: [William Tuméo](https://github.com/williamd1k0)
+
+:art: [Lucas Flicky](http://www.lucasflicky.com)
