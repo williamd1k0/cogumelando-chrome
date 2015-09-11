@@ -10,7 +10,7 @@ var twitch = {
     streamTitle: 'LIVE',
     offAirTitle: 'OFF',
     offAirMessage: 'Off-air',
-    notifySfx: 'adanado.ogg'
+    notifySfx: '../assets/adanado.ogg'
 }
 
 // inicialização do chrome
@@ -48,7 +48,7 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
 // Método que inicializa os dados persistentes
 function mythInit(){
     chrome.browserAction.setBadgeText({text:" "});
-    
+
     if(localStorage.length == 0){
         // cria os dados persistentes
         localStorage.setItem('persist',true);
@@ -56,12 +56,12 @@ function mythInit(){
         localStorage.setItem('notify',true);
         localStorage.setItem('interval',1);
         var initNotify = new Notification('Cogumelando', {
-                icon: 'icon128.png',
+                icon: '../assets/icon128.png',
                 body: "Notificações estão ativadas, se quiser desativar entre nas opções.",
                 silent: true
             });
         initNotify.onclick = function(){
-            chrome.tabs.create({'url': 'options.html'}, function(tab){/*callback*/});
+            chrome.tabs.create({'url': '../pages/options.html'}, function(tab){/*callback*/});
         };
     }
 }
@@ -84,7 +84,7 @@ function mythTwitch(twitchJson){
             // se as notificações estiverem ativadas
             if(localStorage.notify){
                 var liveNotify = new Notification('ADANADO!!', {
-                        icon: 'icon128.png',
+                        icon: '../assets/icon128.png',
                         body: "É TEMPO! Começando "+twitch.game+" ao vivo agora!",
                         silent: true
                     });
