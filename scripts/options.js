@@ -1,11 +1,11 @@
-var options = document.getElementsByClassName('button');
+/*var options = document.getElementsByClassName('button');
 
 for (var i = 0; i < options.length; i++) {
     options[i].onclick = function (e) {
         alert(e);
     }
 }
-
+*/
 var sounds = document.getElementsByName('sound'),
     notify = document.getElementsByName('notify'),
     loop = document.getElementsByName('loop'),

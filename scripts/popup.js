@@ -2,7 +2,7 @@
 var buttons = document.getElementsByClassName('corolho'),
     menu = document.getElementById('menu'),
     buttonsHelp = ['Canal do Twitch','Página do Facebook','Página do Twitter','Site oficial','Opções'],
-    buttonsUrl = ['http://www.twitch.tv/cogumelandooficial/','https://www.facebook.com/Cogumelando','https://twitter.com/cogumelandosite','http://www.cogumelando.com.br/','options.html'],
+    buttonsUrl = ['http://www.twitch.tv/cogumelandooficial/','https://www.facebook.com/Cogumelando','https://twitter.com/cogumelandosite','http://www.cogumelando.com.br/','../pages/options.html'],
     disableSound = document.getElementById('sound');
 
 // força o botão do twitch a ser somente da classe corolho

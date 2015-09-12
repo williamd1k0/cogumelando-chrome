@@ -4,14 +4,14 @@
   "name": "Cogumelando",
   "description": "Extensão para Google Chrome do Cogumelando",
   "version": "1.0",
-  "icons": { "16": "icon16.png",
-           "48": "icon48.png",
-          "128": "icon128.png" },
+  "icons": { "16": "assets/icon16.png",
+           "48": "assets/icon48.png",
+          "128": "assets/icon128.png" },
   "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
+    "default_icon": "assets/icon.png",
+    "default_popup": "pages/popup.html"
   },
-  "options_page": "options.html",
+  "options_page": "pages/options.html",
   "permissions": [
     "*://*.twitch.tv/*",
     "alarms",
@@ -19,7 +19,7 @@
     "tabs"
   ],
   "background": {
-      "page": "background.html",
+      "page": "pages/background.html",
       "persistent": false
   },
   "homepage_url": "http://www.cogumelando.com.br/"
