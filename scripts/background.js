@@ -81,9 +81,10 @@ function mythTwitch(twitchJson){
 
             // se as notificações estiverem ativadas
             if(localStorage.notify){
+                var liveGame = twitch.game != null ? twitch.game : "live";
                 var liveNotify = new Notification('ADANADO!!', {
                         icon: '../assets/icon128.png',
-                        body: "É TEMPO! Começando "+twitch.game+" ao vivo agora!",
+                        body: "É TEMPO! Começando "+liveGame+" ao vivo agora!",
                         silent: true
                     });
 
