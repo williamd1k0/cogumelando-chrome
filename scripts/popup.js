@@ -21,10 +21,10 @@ if(localStorage.onStream){
     var liveTitle = stream.channel.status;
     if(liveTitle.search("DAFM") !== -1){
         liveType.className = 'live-type';
-        liveType.src = 'dafm.png';
+        liveType.src = '../assets/dafm.png';
     }else if(liveTitle.search("Game Quest") !== -1){
         liveType.className = 'live-type';
-        liveType.src = 'cogugq.png';
+        liveType.src = '../assets/cogugq.png';
     }
 
     twitchView[0].innerHTML = stream.game != null ? '<p>'+stream.game+'</p>' : '';
