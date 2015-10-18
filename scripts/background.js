@@ -53,14 +53,22 @@ function mythInit(){
         localStorage.setItem('sound',true);
         localStorage.setItem('notify',true);
         localStorage.setItem('interval',1);
-        var initNotify = new Notification('Cogumelando', {
-                icon: '../assets/icon128.png',
-                body: "Notificações estão ativadas, se quiser desativar entre nas opções.",
-                silent: true
-            });
-        initNotify.onclick = function(){
+        // notificação inicial
+        var notificationId = "init";
+        chrome.notifications.create(
+            notificationId,
+            {
+                type:"basic",
+                isClickable:true,
+                iconUrl:"../assets/icon128.png",
+                title:"Cogumelando",
+                message:"Notificações estão ativadas, se quiser desativar entre nas opções."
+            },function(){}
+        );
+
+        chrome.notifications.onClicked.addListener(function(notificationId){
             chrome.tabs.create({'url': '../pages/options.html'}, function(tab){/*callback*/});
-        };
+        });
     }
 }
 
@@ -82,18 +90,23 @@ function mythTwitch(twitchJson){
             // se as notificações estiverem ativadas
             if(localStorage.notify){
                 var liveGame = twitch.game != null ? twitch.game : "live";
-                var liveNotify = new Notification('ADANADO!!', {
-                        icon: '../assets/icon128.png',
-                        body: "É TEMPO! Começando "+liveGame+" ao vivo agora!",
-                        silent: true
-                    });
 
-                liveNotify.onclick = function(){
+                var notificationId = "live";
+                chrome.notifications.create(
+                    notificationId,
+                    {
+                        type:"basic",
+                        isClickable:true,
+                        iconUrl:"../assets/icon128.png",
+                        title:"ADANADO!!",
+                        message:"É TEMPO! Começando "+liveGame+" ao vivo agora!"
+                    },function(){}
+                );
+
+                chrome.notifications.onClicked.addListener(function(notificationId){
                     chrome.tabs.create({'url': 'http://www.twitch.tv/cogumelandooficial/'}, function(tab){/*callback*/});
-                };
-                setTimeout(function(){
-                    liveNotify.close();
-                },10000);
+                });
+
             }
             // se as notificações sonoras estiverem ativadas
             if (localStorage.sound) {
