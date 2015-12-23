@@ -121,7 +121,6 @@ function mythTwitch(twitchJson){
         chrome.browserAction.setBadgeBackgroundColor({color: "#0d0"}); // cor
         chrome.browserAction.setBadgeText({text:twitch.streamTitle}); // título
         chrome.browserAction.setTitle({title:twitch.name+' | '+twitch.game}); // tooltip
-        console.log("Stream");
 
     }else{ // canal offline
         // altera o estado de stream pra offline
@@ -130,7 +129,7 @@ function mythTwitch(twitchJson){
         chrome.browserAction.setBadgeBackgroundColor({color: "#d00"});
         chrome.browserAction.setBadgeText({text:twitch.offAirTitle});
         chrome.browserAction.setTitle({title:twitch.name+' | '+twitch.offAirMessage});
-        console.log("Off-air");
+        
     }
 }
 
@@ -140,12 +139,10 @@ function getTwitch(username){
     $.ajax({
         url:'https://api.twitch.tv/kraken/streams/'+username,
         success:function(channel) {
-            console.log('Objeto recebido');
             // método executado se o ajax tiver sucesso
             mythTwitch(channel);
         },
         error:function() {
-            console.log('Sem conexão');
             // método executado caso não tenha sucesso
             // isso pode acontecer caso esteja sem internet
             // ou alguma issue da extensão ou do navegador

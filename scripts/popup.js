@@ -1,3 +1,5 @@
+$.ajaxSetup({cache:false});
+
 // elementos para os botões e o input do disableSound
 var buttons = document.getElementsByClassName('corolho'),
     menu = document.getElementById('menu'),
@@ -43,7 +45,7 @@ if(localStorage.onStream){
                     return Math.floor(Math.random() * (max - min + 1)) + min;
                 }
                 var rand = randomInt(0, result.videos.length-1);
-                window.videos = result.videos[rand];
+                
                 twitchView[0].innerHTML = `
                     <p class="click">
                         Veja também: ${result.videos[rand].game}
