@@ -8,12 +8,13 @@ var buttons = document.getElementsByClassName('corolho'),
 // força o botão do twitch a ser somente da classe corolho
 buttons[0].className = 'corolho';
 
+// recebe as informações da live
+var stream = JSON.parse(localStorage.channel),
+    twitchView = document.getElementsByClassName('twitch');
+    
 // é executado somente se estiver ao vivo
 if(localStorage.onStream){
-    // recebe as informações da live
-    var stream = JSON.parse(localStorage.channel),
-        twitchView = document.getElementsByClassName('twitch');
-        liveType = document.getElementsByTagName('img')[0];
+    var liveType = document.getElementsByTagName('img')[0];
     // insere coisas da live no popup (título,nome do jogo, screenshot)
     buttons[0].className = 'corolho live';
     buttons[0].focus();
@@ -22,7 +23,7 @@ if(localStorage.onStream){
     if(liveTitle.search("DAFM") !== -1){
         liveType.className = 'live-type';
         liveType.src = '../assets/dafm.png';
-    }else if(liveTitle.search("Game Quest") !== -1){
+    }else if(liveTitle.search("Game Quest") !== -1 || liveTitle.search("CGQ") !== -1){
         liveType.className = 'live-type';
         liveType.src = '../assets/cogugq.png';
     }
@@ -33,6 +34,26 @@ if(localStorage.onStream){
             <img style="width:95%" src="${stream.preview.medium}">
         </p>`;
     twitchView[2].innerHTML = '<p>'+liveTitle+'</p>';
+}else if(stream.game != null){
+    $.ajax(
+        {
+            url:'https://api.twitch.tv/kraken/channels/cogumelandooficial/videos',
+            success:function(result){
+                function randomInt(min, max) {
+                    return Math.floor(Math.random() * (max - min + 1)) + min;
+                }
+                var rand = randomInt(0, result.videos.length-1);
+                window.videos = result.videos[rand];
+                twitchView[0].innerHTML = `
+                    <p class="click">
+                        Veja também: ${result.videos[rand].game}
+                    </p>`;
+                twitchView[0].onclick = function(){
+                    chrome.tabs.create({'url': result.videos[rand].url});
+                };
+                
+            }
+        });
 }
 
 buttons[0].onclick = function(){
