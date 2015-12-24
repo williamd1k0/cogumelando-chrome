@@ -1,4 +1,5 @@
 $.ajaxSetup({cache:false});
+var imgLoader = new ImageLoader();
 
 // elementos para os botões e o input do disableSound
 var buttons = document.getElementsByClassName('corolho'),
@@ -13,7 +14,7 @@ buttons[0].className = 'corolho';
 // recebe as informações da live
 var stream = JSON.parse(localStorage.channel),
     twitchView = document.getElementsByClassName('twitch');
-    
+
 // é executado somente se estiver ao vivo
 if(localStorage.onStream){
     var liveType = document.getElementsByTagName('img')[0];
@@ -31,21 +32,33 @@ if(localStorage.onStream){
     }
 
     twitchView[0].innerHTML = stream.game != null ? '<p>'+stream.game+'</p>' : '';
-    twitchView[1].innerHTML = `
-        <p>
-            <img style="width:95%" src="${stream.preview.medium}">
-        </p>`;
+    twitchView[1].innerHTML = '<p></p>';
+
+    var streamDefault = imgLoader.load(stream.channel.video_banner, {'className':'stream-preview'});
+    imgLoader.onload(function () {
+        twitchView[1].firstChild.appendChild(streamDefault);
+
+        var streamImg = imgLoader.load(stream.preview.medium);
+        imgLoader.onload(function () {
+            twitchView[1].innerHTML = '<p></p>';
+            streamImg.className = 'stream-preview';
+            twitchView[1].firstChild.appendChild(streamImg);
+        });
+    });
+
     twitchView[2].innerHTML = '<p>'+liveTitle+'</p>';
-}else if(stream.game != null){
+
+}else{
     $.ajax(
         {
             url:'https://api.twitch.tv/kraken/channels/cogumelandooficial/videos',
             success:function(result){
+
                 function randomInt(min, max) {
                     return Math.floor(Math.random() * (max - min + 1)) + min;
                 }
                 var rand = randomInt(0, result.videos.length-1);
-                
+
                 twitchView[0].innerHTML = `
                     <p class="click">
                         Veja também: ${result.videos[rand].game}
@@ -53,9 +66,10 @@ if(localStorage.onStream){
                 twitchView[0].onclick = function(){
                     chrome.tabs.create({'url': result.videos[rand].url});
                 };
-                
+
             }
-        });
+        }
+    );
 }
 
 buttons[0].onclick = function(){

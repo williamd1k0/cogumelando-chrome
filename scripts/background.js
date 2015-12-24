@@ -129,7 +129,7 @@ function mythTwitch(twitchJson){
         chrome.browserAction.setBadgeBackgroundColor({color: "#d00"});
         chrome.browserAction.setBadgeText({text:twitch.offAirTitle});
         chrome.browserAction.setTitle({title:twitch.name+' | '+twitch.offAirMessage});
-        
+
     }
 }
 
