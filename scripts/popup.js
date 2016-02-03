@@ -17,10 +17,21 @@ var stream = JSON.parse(localStorage.channel),
 
 // é executado somente se estiver ao vivo
 if(localStorage.onStream){
+    var imageForce = 1;
     var liveType = document.getElementsByTagName('img')[0];
     // insere coisas da live no popup (título,nome do jogo, screenshot)
     buttons[0].className = 'corolho live';
     buttons[0].focus();
+
+    // Força o recarregamento da imagem
+    if (Object.keys(localStorage).indexOf('imageForce') >= 0) {
+        imageForce = parseInt(localStorage.imageForce);
+        localStorage.setItem('imageForce', ++imageForce);
+    }else{
+        localStorage.setItem('imageForce', imageForce);
+    }
+
+    imageForce = btoa(imageForce);
 
     var liveTitle = stream.channel.status;
     if(liveTitle.search("DAFM") !== -1){
@@ -34,11 +45,11 @@ if(localStorage.onStream){
     twitchView[0].innerHTML = stream.game != null ? '<p>'+stream.game+'</p>' : '';
     twitchView[1].innerHTML = '<p></p>';
 
-    var streamDefault = imgLoader.load(stream.channel.video_banner, {'className':'stream-preview'});
+    var streamDefault = imgLoader.load(stream.channel.video_banner, {'class':'stream-preview'});
     imgLoader.onload(function () {
         twitchView[1].firstChild.appendChild(streamDefault);
 
-        var streamImg = imgLoader.load(stream.preview.medium);
+        var streamImg = imgLoader.load(stream.preview.medium+'?force='+imageForce);
         imgLoader.onload(function () {
             twitchView[1].innerHTML = '<p></p>';
             streamImg.className = 'stream-preview';
