@@ -124,7 +124,7 @@ disableSound.onchange = function(){
     }
 }
 
-var fun_allowed = !false;
+var fun_allowed = false;
 function isDevTools(key) {
 	return (key.keyCode === 123) || (key.keyCode === 73 && key.ctrlKey && key.shiftKey);
 }
