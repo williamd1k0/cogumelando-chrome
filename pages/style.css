@@ -5,6 +5,10 @@ body {
   width: 300px;
   cursor:default;
 }
+* ::selection{
+    background: #258a29;
+    color: #fff;
+}
 load{
     display: none;
 }
@@ -136,4 +140,6 @@ background-position:0 0, 0 0;
   }
   img.stream-preview{
       width: 95%;
+      border: solid 5px #386C37;
+      border-style: dotted;
   }
