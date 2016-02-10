@@ -123,26 +123,3 @@ disableSound.onchange = function(){
         localStorage.setItem('sound',true);
     }
 }
-
-var fun_allowed = false;
-function isDevTools(key) {
-	return (key.keyCode === 123) || (key.keyCode === 73 && key.ctrlKey && key.shiftKey);
-}
-
-function isSourceCode(key){
-	return key.keyCode === 85 && key.ctrlKey;
-}
-
-window.onkeydown = function(key){
-	if(!fun_allowed){
-		if(isDevTools(key) || isSourceCode(key)){
-			return false;
-		}
-	}
-}
-
-window.oncontextmenu = function(click) {
-	if(!fun_allowed){
-		return false;
-	}
-}
