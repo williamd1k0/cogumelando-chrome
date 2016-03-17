@@ -1,7 +1,3 @@
-chrome.runtime.onInstalled.addListener(function(details){
-    chrome.alarms.create("mainLoop", {delayInMinutes: 0.3,periodInMinutes: 1});
-    mythInit();
-});
 
 // objeto com os dados mais importantes (não persistentes)
 var twitch = {
@@ -13,37 +9,8 @@ var twitch = {
     notifySfx: '../assets/adanado.ogg'
 }
 
-// inicialização do chrome
-chrome.runtime.onStartup.addListener(function (){
-    // força o estado da live pra Off-air por causa do popup
-    localStorage.removeItem('onStream');
-    // primeira inicialização
-    mythInit();
-    // altera o botão do popup
-    noConnect();
-    // cria o evento de alarm (loop principal de checagem)
-    // delayInMinutes: tempo antes da primeira checagem
-    // periodInMinutes: tempo entre uma checagem e outra
-    chrome.alarms.create("mainLoop", {delayInMinutes: 0.3,periodInMinutes: parseInt(localStorage.interval)});
-});
-
 // força a desativação do cache do ajax
 $.ajaxSetup({cache:false});
-
-/*@deprecated
- * Evento de loop principal, não funciona em background
- * pois ela morre depois de alguns segundo em idle
-getTwitch(twitch.username);
-twitch.mainLoop = setInterval(function(){
-    getTwitch(twitch.username);
-},twitch.ajaxInterval);
-*/
-
-// bloco que será executado a cada X minutos
-chrome.alarms.onAlarm.addListener(function(alarm) {
-    // checagem do canal do twitch
-    getTwitch(twitch.username);
-});
 
 // Método que inicializa os dados persistentes
 function mythInit(){
