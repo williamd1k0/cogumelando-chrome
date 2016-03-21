@@ -18,6 +18,8 @@ window.onload = function () {
 
     reset.onclick = mythReset;
 
+    document.querySelector('#extension-version').innerHTML = chrome.app.getDetails().version;
+
     function checkStorage(element, storage){
         if(localStorage[storage]){
             element[0].className = "pressed";

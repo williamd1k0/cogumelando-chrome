@@ -1,5 +1,6 @@
 
 window.onload = function () {
+    "use strict";
     // checagem do canal do twitch
     getTwitch(twitch.username);
     var imgLoader = new ImageLoader();
@@ -32,21 +33,13 @@ window.onload = function () {
 
     // é executado somente se estiver ao vivo
     if(localStorage.onStream){
-        var imageForce = 1;
         var liveType = document.getElementsByTagName('img')[0];
         // insere coisas da live no popup (título,nome do jogo, screenshot)
         buttons[0].className = 'corolho live';
         buttons[0].focus();
 
         // Força o recarregamento da imagem
-        if (Object.keys(localStorage).indexOf('imageForce') >= 0) {
-            imageForce = parseInt(localStorage.imageForce);
-            localStorage.setItem('imageForce', ++imageForce);
-        }else{
-            localStorage.setItem('imageForce', imageForce);
-        }
-
-        imageForce = btoa(imageForce);
+        var imageForce = btoa(new Date().toJSON());
 
         var liveTitle = stream.channel.status;
         if(liveTitle.search("DAFM") !== -1){

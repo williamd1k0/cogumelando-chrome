@@ -7,7 +7,7 @@ var twitch = {
     offAirTitle: 'OFF',
     offAirMessage: 'Off-air',
     notifySfx: '../assets/adanado.ogg'
-}
+};
 
 // força a desativação do cache do ajax
 $.ajaxSetup({cache:false});
