@@ -83,7 +83,7 @@ window.onload = function () {
                 success:function(result){
                     callback(result);
                 },
-                error:function () {
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
                     callback(false);
                 }
             }
@@ -131,20 +131,32 @@ window.onload = function () {
     function showStreamSuggestion() {
         var videos = [];
         getTwitchSuggestions('limit=10',function (result) {
-            videos = videos.concat(result.videos);
-            getTwitchSuggestions('broadcasts=true',function (result) {
+            if (result) {
                 videos = videos.concat(result.videos);
-                var rand = randomInt(0, videos.length-1);
+                getTwitchSuggestions('broadcasts=true',function (result) {
+                    if (result) {
+                        videos = videos.concat(result.videos);
+                        var rand = randomInt(0, videos.length-1);
 
-                twitchView[0].innerHTML = `
-                    <p class="click">
+                        twitchView[0].innerHTML = `
+                        <p class="click">
                         Veja também: ${videos[rand].game}
-                    </p>`;
-                twitchView[0].onclick = function(){
-                    chrome.tabs.create({'url': videos[rand].url});
-                };
-            });
+                        </p>`;
+                        twitchView[0].onclick = function(){
+                            chrome.tabs.create({'url': videos[rand].url});
+                        };
+                    }else{
+                        removeLoadingImage();
+                    }
+                });
+            }else{
+                removeLoadingImage();
+            }
         });
+    }
+
+    function removeLoadingImage() {
+        twitchView[0].innerHTML = '';
     }
 
     function randomInt(min, max) {

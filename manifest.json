@@ -3,7 +3,7 @@
   "name": "Cogumelando",
   "short_name": "Cogumelando",
   "description": "Extensão do Cogumelando para Google Chrome",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "icons": {
       "16": "assets/icon16.png",
       "48": "assets/icon48.png",
