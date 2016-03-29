@@ -84,7 +84,7 @@ function mythTwitch(twitchJson){
             }
         }
         // altera as informações do botão
-        var label = twitch.name+' '+String.fromCharCode(55356)+' '; // 🎮
+        var label = twitch.name+' 🎮 '; // 🎮
         if(twitch.game) label += twitch.game;
         setBadgeInfo(label, twitch.streamTitle, '#0d0');
 
@@ -93,7 +93,7 @@ function mythTwitch(twitchJson){
         localStorage.removeItem('onStream');
         // altera as informações do botão (parecido com o que está acima)
         setBadgeInfo(
-            twitch.name+' '+String.fromCharCode(9749)+' '+twitch.offAirMessage, // ☕
+            twitch.name+' ☕ '+twitch.offAirMessage, // ☕
             twitch.offAirTitle, '#d00'
         );
     }
@@ -127,5 +127,5 @@ function setBadgeInfo(_title, _text, _color){
 
 // Método que altera o botão para o caso do ajax falhar
 function noConnect(){
-    setBadgeInfo(twitch.name+' '+String.fromCharCode(55357), '...', '#999'); // 🔁
+    setBadgeInfo(twitch.name+' 🔁', '...', '#999'); // 🔁
 }
