@@ -1,5 +1,6 @@
+
 chrome.runtime.onInstalled.addListener(function(details){
-    chrome.alarms.create("mainLoop", {delayInMinutes: 0.3,periodInMinutes: 1});
+    chrome.alarms.create("mainLoop", {delayInMinutes: 0.3, periodInMinutes: 1});
     mythInit();
 });
 
@@ -15,7 +16,7 @@ chrome.runtime.onStartup.addListener(function (){
     // cria o evento de alarm (loop principal de checagem)
     // delayInMinutes: tempo antes da primeira checagem
     // periodInMinutes: tempo entre uma checagem e outra
-    chrome.alarms.create("mainLoop", {delayInMinutes: 0.3,periodInMinutes: parseInt(localStorage.interval)});
+    chrome.alarms.create("mainLoop", {delayInMinutes: 0.3, periodInMinutes: parseInt(localStorage.interval)});
 });
 
 // bloco que será executado a cada X minutos
