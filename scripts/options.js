@@ -20,6 +20,12 @@ window.onload = function () {
 
     document.querySelector('#extension-version').innerHTML = chrome.app.getDetails().version;
 
+    function playSound(src) {
+        new Howl({
+            urls: [src]
+        }).play();
+    }
+
     function checkStorage(element, storage){
         if(localStorage[storage]){
             element[0].className = "pressed";
@@ -30,13 +36,18 @@ window.onload = function () {
 
     function configLoop(element, min){
         element.onclick = function(){
-            this.className = "pressed";
-            localStorage.setItem('interval',min);
-            chrome.alarms.clearAll();
-            chrome.alarms.create("mainLoop", {delayInMinutes: 0.3,periodInMinutes: min});
-            for (var i = 0; i < loop.length; i++) {
-                if(loop[i].innerHTML !== min+" min"){
-                    loop[i].className = '';
+            if(parseInt(localStorage.interval) == min){
+                playSound('../assets/bump.ogg');
+            }else {
+                playSound('../assets/kick.ogg');
+                this.className = "pressed";
+                localStorage.setItem('interval',min);
+                chrome.alarms.clearAll();
+                chrome.alarms.create("mainLoop", {delayInMinutes: 0.3,periodInMinutes: min});
+                for (var i = 0; i < loop.length; i++) {
+                    if(loop[i].innerHTML !== min+" min"){
+                        loop[i].className = '';
+                    }
                 }
             }
         }
@@ -61,25 +72,37 @@ window.onload = function () {
 
     function configButton(element,storage){
         element[0].onclick = function(){
-            localStorage.setItem(storage,true);
-            this.className = "pressed";
-            element[1].className = '';
+            if(localStorage[storage]){
+                playSound('../assets/bump.ogg');
+            }else {
+                playSound('../assets/kick.ogg');
+                localStorage.setItem(storage,true);
+                this.className = "pressed";
+                element[1].className = '';
+            }
         };
         element[1].onclick = function(){
-            localStorage.removeItem(storage);
-            this.className = "pressed";
-            element[0].className = '';
+            if(localStorage[storage]){
+                playSound('../assets/kick.ogg');
+                localStorage.removeItem(storage);
+                this.className = "pressed";
+                element[0].className = '';
+            }else {
+                playSound('../assets/bump.ogg');
+            }
         };
     }
 
     function mythReset(){
         chrome.alarms.clearAll();
         chrome.alarms.create("mainLoop", {delayInMinutes: 0.3,periodInMinutes: 1});
-        localStorage.clear();
         localStorage.setItem('persist',true);
         localStorage.setItem('sound',true);
         localStorage.setItem('notify',true);
         localStorage.setItem('interval',1);
-        window.location.reload();
+        playSound('../assets/pow.ogg');
+        setTimeout(function () {
+            window.location.reload();
+        }, 400);
     }
 }

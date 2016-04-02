@@ -2,7 +2,7 @@ var imgLoader = new ImageLoader();
 
 // elementos para os botões e o input do disableSound
 var buttons = document.getElementsByClassName('corolho'),
-    menu = document.getElementById('menu'),
+    menu = document.querySelector('#menu small'),
     buttonsHelp = [
         'Canal do Twitch',
         'Página do Facebook',
@@ -18,7 +18,17 @@ var buttons = document.getElementsByClassName('corolho'),
         '../pages/options.html'
     ],
     disableSound = document.getElementById('sound'),
-    twitchView = document.getElementsByClassName('twitch');
+    twitchView = document.querySelectorAll('.twitch p');
+
+var twitchTop = twitchView[0];
+var twitchMid = twitchView[1];
+var twitchBottom = twitchView[2];
+
+Element.prototype.clear = function(){
+    while(this.firstChild){
+        this.removeChild(this.firstChild);
+    }
+};
 
 window.onload = function () {
     // força o botão do twitch a ser somente da classe corolho
@@ -68,10 +78,10 @@ window.onload = function () {
     // Método para inserir os textos dos botões
     function setCursorEvent(element, help){
         element.onmouseover = function(){
-            menu.innerHTML = '<small>'+help+'</small>';
+            menu.innerHTML = help;
         }
         element.onmouseout = function(){
-            menu.innerHTML = '';
+            menu.clear();
         }
     }
 
@@ -110,22 +120,21 @@ window.onload = function () {
             liveType.src = '../assets/cogugq.png';
         }
 
-        twitchView[0].innerHTML = stream.game != null ? '<p>'+stream.game+'</p>' : '';
-        twitchView[1].innerHTML = '<p></p>';
+        twitchTop.innerHTML = stream.game != null ? stream.game : '';
 
-        var streamDefault = imgLoader.load(stream.channel.video_banner, {'class':'stream-preview', 'draggable':false});
+        var streamDefault = imgLoader.load('../assets/coguinfo.png', {'class':'stream-preview', 'draggable':false});
         imgLoader.onload(function () {
-            twitchView[1].firstChild.appendChild(streamDefault);
+            twitchMid.appendChild(streamDefault);
 
             var streamImg = imgLoader.load(stream.preview.medium+'?force='+imageForce, {'draggable':false});
             imgLoader.onload(function () {
-                twitchView[1].innerHTML = '<p></p>';
+                twitchMid.clear();
                 streamImg.className = 'stream-preview';
-                twitchView[1].firstChild.appendChild(streamImg);
+                twitchMid.appendChild(streamImg);
             });
         });
 
-        twitchView[2].innerHTML = '<p>'+liveTitle+'</p>';
+        twitchBottom.innerHTML = liveTitle;
     }
 
     function showStreamSuggestion() {
@@ -138,11 +147,9 @@ window.onload = function () {
                         videos = videos.concat(result.videos);
                         var rand = randomInt(0, videos.length-1);
 
-                        twitchView[0].innerHTML = `
-                        <p class="click">
-                        Veja também: ${videos[rand].game}
-                        </p>`;
-                        twitchView[0].onclick = function(){
+                        twitchTop.className = 'click';
+                        twitchTop.innerHTML = 'Veja também: '+videos[rand].game;
+                        twitchTop.onclick = function(){
                             chrome.tabs.create({'url': videos[rand].url});
                         };
                     }else{
@@ -156,7 +163,7 @@ window.onload = function () {
     }
 
     function removeLoadingImage() {
-        twitchView[0].innerHTML = '';
+        twitchTop.clear();
     }
 
     function randomInt(min, max) {
