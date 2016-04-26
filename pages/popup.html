@@ -6,7 +6,8 @@
     <title>Cogumelando</title>
     <link rel="stylesheet" href="style.css">
     <script src="../scripts/jquery.min.js" charset="utf-8"></script>
-    <script src="../scripts/img_loader.js" charset="utf-8"></script>
+    <script src="../scripts/howler.min.js" charset="utf-8"></script>
+    <script src="../scripts/img_loader.min.js" charset="utf-8"></script>
 </head>
 
 <body>
@@ -16,9 +17,11 @@
         <br>
         <div id="slogan" style="center"><i>A princesa está em outro castelo</i></div>
 
-        <p id="menu"></p>
+        <p id="menu">
+            <small></small>
+        </p>
         <p>
-            <a href="#" class="corolho live" title="Canal do Twitch">
+            <a draggable="false" href="#" class="corolho live" title="Canal do Twitch">
                 <img draggable="false" class="icon testex" src="../assets/live.png">
             </a>
             <a class="corolho" title="Página do Facebook">
@@ -37,13 +40,19 @@
     </div>
     <div>
         <div class="twitch">
-
+            <p>
+                <img draggable="false" style="width:24px" src="../assets/loading.gif" alt="" />
+            </p>
         </div>
         <div class="twitch">
+            <p>
 
+            </p>
         </div>
         <div class="twitch">
+            <p>
 
+            </p>
         </div>
     </div>
 
@@ -55,4 +64,5 @@
 </body>
 <script src="../scripts/background.js" charset="utf-8"></script>
 <script src="../scripts/popup.js" charset="utf-8"></script>
+
 </html>

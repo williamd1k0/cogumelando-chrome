@@ -2,11 +2,13 @@
   "manifest_version": 2,
   "name": "Cogumelando",
   "short_name": "Cogumelando",
-  "description": "Extensão do Cogumelando para Google Chrome",
-  "version": "1.2.7",
-  "icons": { "16": "assets/icon16.png",
-           "48": "assets/icon48.png",
-          "128": "assets/icon128.png" },
+  "description": "Extensão do Cogumelando para Opera",
+  "version": "1.4.0",
+  "icons": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+  },
   "browser_action": {
     "default_icon": "assets/icon.png",
     "default_popup": "pages/popup.html"
