@@ -6,7 +6,8 @@ var twitch = {
     streamTitle: 'LIVE',
     offAirTitle: 'OFF',
     offAirMessage: 'Aguarde e Xonfie',
-    notifySfx: '../assets/adanado.ogg'
+    notifySfx: '../assets/adanado.ogg',
+    clientId: 'q6iy5vi43t2b2v10acfqz9wudh7hzlb'
 };
 
 // força a desativação do cache do ajax
@@ -101,10 +102,13 @@ function mythTwitch(twitchJson){
 
 // Método que faz o request ajax no canal do twitch
 // @username: usuário do twitch
-function getTwitch(username, callback){
+function getTwitch(username, clientid, callback){
     callback = callback || function () {};
     $.ajax({
         url:'https://api.twitch.tv/kraken/streams/'+username,
+        headers: {
+        'Client-ID': clientid
+        },
         success:function(channel) {
             // método executado se o ajax tiver sucesso
             mythTwitch(channel);

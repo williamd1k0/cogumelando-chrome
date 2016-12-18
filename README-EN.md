@@ -23,6 +23,6 @@
     * Displays <kbd>...</kbd> on startup or connection malfunction (Open an issue in case this occurs often).
 
 
-:computer: [William Tuméo](https://github.com/williamd1k0)
+:computer: [William Tumeo](https://github.com/williamd1k0)
 
 :art: [Lucas Flicky](http://www.lucasflicky.com)

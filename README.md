@@ -11,16 +11,18 @@
     * Notificar lives uma vez, quando ela começa ou quando o navegador é iniciado.
     * Notificações de desktop (valor inicial: ativado).
     * Notificações sonoras (valor inicial: ativado).
+
 2. Popup:
     * Links úteis do Cogumelando (Twitch, Facebook, Twitter e Site Oficial).
     * Atalho para desativar o som das notificações.
     * Se estiver ao-vivo, é exibido informações da live (nome do jogo e título da live) e uma screenshot.
+
 3. Botão:
     * Exibe <kbd>OFF</kbd> para Off-air.
     * Exibe <kbd>LIVE</kbd> para ao-vivo e exibe o nome do jogo on-hover.
     * Exibe <kbd>...</kbd> na inicialização ou quando falha na conexão (abrir issue caso esteja ocorrendo com frequência).
 
 
-:computer: [William Tuméo](https://github.com/williamd1k0)
+:computer: [William Tumeo](https://github.com/williamd1k0)
 
 :art: [Lucas Flicky](http://www.lucasflicky.com)
