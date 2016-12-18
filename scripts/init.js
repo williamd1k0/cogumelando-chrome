@@ -22,5 +22,5 @@ chrome.runtime.onStartup.addListener(function (){
 // bloco que será executado a cada X minutos
 chrome.alarms.onAlarm.addListener(function(alarm) {
     // checagem do canal do twitch
-    getTwitch(twitch.username);
+    getTwitch(twitch.username, twitch.clientId);
 });

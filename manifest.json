@@ -3,7 +3,7 @@
   "name": "Cogumelando",
   "short_name": "Cogumelando",
   "description": "Extensão do Cogumelando para Opera",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "icons": {
       "16": "assets/icon16.png",
       "48": "assets/icon48.png",

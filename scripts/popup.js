@@ -35,7 +35,7 @@ window.onload = function () {
     buttons[0].className = 'corolho';
 
     // checagem do canal do twitch
-    getTwitch(twitch.username, function () {
+    getTwitch(twitch.username, twitch.clientId, function () {
         // é executado somente se estiver ao vivo
         if(localStorage.onStream){
             showStreamInfo();
@@ -90,6 +90,9 @@ window.onload = function () {
         $.ajax(
             {
                 url:'https://api.twitch.tv/kraken/channels/cogumelandooficial/videos/?'+options,
+                headers: {
+                    'Client-ID': twitch.clientId
+                },
                 success:function(result){
                     callback(result);
                 },

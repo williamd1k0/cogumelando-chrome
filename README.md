@@ -21,6 +21,6 @@
     * Exibe <kbd>...</kbd> na inicialização ou quando falha na conexão (abrir issue caso esteja ocorrendo com frequência).
 
 
-:computer: [William Tuméo](https://github.com/williamd1k0)
+:computer: [William Tumeo](https://github.com/williamd1k0)
 
 :art: [Lucas Flicky](http://www.lucasflicky.com)
