@@ -11,7 +11,7 @@ var buttons = document.getElementsByClassName('corolho'),
         'Opções'
     ],
     buttonsUrl = [
-        'http://www.twitch.tv/cogumelandooficial/',
+        'http://www.twitch.tv/cogumelando/',
         'https://www.facebook.com/Cogumelando',
         'https://twitter.com/cogumelandosite',
         'http://www.cogumelando.com.br/',
