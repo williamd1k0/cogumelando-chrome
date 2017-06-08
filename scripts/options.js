@@ -12,14 +12,6 @@ window.addEventListener('load', function (event) {
     configButton(sounds, 'sound');
     configButton(notify, 'notify');
 
-    function playSound(src) {
-        if (localStorage['sound']){
-            new Howl({
-                urls: [src]
-            }).play();
-        }
-    }
-
     function checkStorage(elements, storage){
         if(localStorage[storage]){
             elements[0].classList.add('pressed');
@@ -32,9 +24,9 @@ window.addEventListener('load', function (event) {
         element.addEventListener('click', function(event){
             var min = parseInt(this.dataset.time);
             if(parseInt(localStorage.interval) == min){
-                playSound('../assets/bump.ogg');
+                playSound(CONFIG.sfx.bump);
             }else {
-                playSound('../assets/kick.ogg');
+                playSound(CONFIG.sfx.kick);
                 this.classList.add('pressed');
                 document.querySelector(
                     'button[data-time="'+localStorage.interval+'"]'
@@ -50,18 +42,20 @@ window.addEventListener('load', function (event) {
     }
 
     function checkLoopTimers(){
-        document.querySelector(
-            'button[data-time="'+localStorage.interval+'"]'
-        ).classList.add('pressed');
+        if(localStorage.interval){
+            document.querySelector(
+                'button[data-time="'+localStorage.interval+'"]'
+            ).classList.add('pressed');
+        }
     }
 
     function configButton(elements, storage){
         elements[0].addEventListener('click', function(event){
             if(localStorage[storage]){
-                playSound('../assets/bump.ogg');
+                playSound(CONFIG.sfx.bump);
             }else {
                 localStorage.setItem(storage, true);
-                playSound('../assets/kick.ogg');
+                playSound(CONFIG.sfx.kick);
                 this.classList.add('pressed');
                 elements[1].classList.remove('pressed');
             }
@@ -69,11 +63,11 @@ window.addEventListener('load', function (event) {
         elements[1].addEventListener('click', function(event){
             if(localStorage[storage]){
                 localStorage.removeItem(storage);
-                playSound('../assets/kick.ogg');
+                playSound(CONFIG.sfx.kick);
                 this.classList.add('pressed');
                 elements[0].classList.remove('pressed');
             }else {
-                playSound('../assets/bump.ogg');
+                playSound(CONFIG.sfx.bump);
             }
         });
     }
@@ -88,7 +82,7 @@ window.addEventListener('load', function (event) {
         localStorage.setItem('sound', true);
         localStorage.setItem('notify', true);
         localStorage.setItem('interval', 1);
-        playSound('../assets/pow.ogg');
+        playSound(CONFIG.sfx.pow);
         setTimeout(function() {
             window.location.reload();
         }, 400);

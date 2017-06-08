@@ -6,8 +6,13 @@ var CONFIG = {
     streamTitle: 'LIVE',
     offAirTitle: 'OFF',
     offAirMessage: 'Aguarde e Xonfie',
-    notifySfx: '../assets/adanado.ogg',
     clientId: '8d7703jd1y4lw4s23n7nf71l8l0gmm',
+    sfx: {
+        notify: '../assets/adanado.ogg',
+        bump: '../assets/bump.ogg',
+        kick: '../assets/kick.ogg',
+        pow: '../assets/pow.ogg'
+    },
     urls: {
         twitch: 'http://www.twitch.tv/cogumelando/',
         facebook: 'https://www.facebook.com/Cogumelando',
@@ -18,6 +23,14 @@ var CONFIG = {
 
 // força a desativação do cache do ajax
 $.ajaxSetup({cache: false});
+
+function playSound(src) {
+    if (localStorage['sound']){
+        new Howl({
+            urls: [src]
+        }).play();
+    }
+}
 
 // Método que inicializa os dados persistentes
 function backgroundInit(){
@@ -32,11 +45,11 @@ function backgroundInit(){
         chrome.notifications.create(
             notificationId,
             {
-                type:"basic",
-                isClickable:true,
-                iconUrl:"../assets/icon128.png",
-                title:"Cogumelando",
-                message:"Notificações sonoras estão ativadas, você pode desativá-las nas opções."
+                type: "basic",
+                isClickable: true,
+                iconUrl: "../assets/icon128.png",
+                title: "Cogumelando",
+                message: "Notificações sonoras estão ativadas, você pode desativá-las nas opções."
             }, function(){}
         );
 
@@ -78,17 +91,13 @@ function TwitchResponse(twitchJson){
                 );
 
                 chrome.notifications.onClicked.addListener(function(notificationId){
-                    chrome.tabs.create({'url': CONFIG.url}, function(tab){/*callback*/});
+                    chrome.tabs.create({'url': CONFIG.urls.twitch}, function(tab){/*callback*/});
                 });
 
             }
             // se as notificações sonoras estiverem ativadas
-            if (localStorage.sound) {
-                // toca o ADANADO
-                var notify = new Howl({
-                    urls: [CONFIG.notifySfx]
-                }).play();
-            }
+            // toca o ADANADO
+            playSound(CONFIG.sfx.notify);
         }
         // altera as informações do botão
         var label = CONFIG.name+' 🎮 '; // 🎮
