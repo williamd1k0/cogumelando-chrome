@@ -1,108 +1,106 @@
 
-window.onload = function () {
+window.addEventListener('load', function (event) {
+
     var sounds = document.getElementsByName('sound'),
         notify = document.getElementsByName('notify'),
-        loop = document.getElementsByName('loop'),
-        reset = document.getElementById('reset'),
-        minutes = [1,2,5,10,20,30];
+        loopTimers = document.getElementsByName('loop'),
+        reset = document.getElementById('reset');
 
-    checkStorage(sounds,'sound');
-    checkStorage(notify,'notify');
-    checkLoop();
-    configButton(sounds,'sound');
-    configButton(notify,'notify');
-
-    for (var i = 0; i < loop.length; i++) {
-        configLoop(loop[i],minutes[i]);
-    }
-
-    reset.onclick = mythReset;
-
-    document.querySelector('#extension-version').innerHTML = chrome.app.getDetails().version;
+    checkStorage(sounds, 'sound');
+    checkStorage(notify, 'notify');
+    checkLoopTimers();
+    configButton(sounds, 'sound');
+    configButton(notify, 'notify');
 
     function playSound(src) {
-        new Howl({
-            urls: [src]
-        }).play();
-    }
-
-    function checkStorage(element, storage){
-        if(localStorage[storage]){
-            element[0].className = "pressed";
-        }else{
-            element[1].className = "pressed";
+        if (localStorage['sound']){
+            new Howl({
+                urls: [src]
+            }).play();
         }
     }
 
-    function configLoop(element, min){
-        element.onclick = function(){
+    function checkStorage(elements, storage){
+        if(localStorage[storage]){
+            elements[0].classList.add('pressed');
+        }else{
+            elements[1].classList.add('pressed');
+        }
+    }
+
+    function configLoopTimers(element){
+        element.addEventListener('click', function(event){
+            var min = parseInt(this.dataset.time);
             if(parseInt(localStorage.interval) == min){
                 playSound('../assets/bump.ogg');
             }else {
                 playSound('../assets/kick.ogg');
-                this.className = "pressed";
-                localStorage.setItem('interval',min);
+                this.classList.add('pressed');
+                document.querySelector(
+                    'button[data-time="'+localStorage.interval+'"]'
+                ).classList.remove('pressed');
+                localStorage.setItem('interval', min);
                 chrome.alarms.clearAll();
-                chrome.alarms.create("mainLoop", {delayInMinutes: 0.3,periodInMinutes: min});
-                for (var i = 0; i < loop.length; i++) {
-                    if(loop[i].innerHTML !== min+" min"){
-                        loop[i].className = '';
-                    }
-                }
+                chrome.alarms.create("mainLoop", {
+                    delayInMinutes: 1,
+                    periodInMinutes: min
+                });
             }
-        }
+        });
     }
 
-    function checkLoop(){
-        var loopMin = parseInt(localStorage.interval);
-        if(loopMin == 1){
-            loop[0].className = "pressed";
-        }else if(loopMin == 2){
-            loop[1].className = "pressed";
-        }else if(loopMin == 5){
-            loop[2].className = "pressed";
-        }else if(loopMin == 10){
-            loop[3].className = "pressed";
-        }else if(loopMin == 20){
-            loop[4].className = "pressed";
-        }else if(loopMin == 30){
-            loop[5].className = "pressed";
-        }
+    function checkLoopTimers(){
+        document.querySelector(
+            'button[data-time="'+localStorage.interval+'"]'
+        ).classList.add('pressed');
     }
 
-    function configButton(element,storage){
-        element[0].onclick = function(){
+    function configButton(elements, storage){
+        elements[0].addEventListener('click', function(event){
             if(localStorage[storage]){
                 playSound('../assets/bump.ogg');
             }else {
+                localStorage.setItem(storage, true);
                 playSound('../assets/kick.ogg');
-                localStorage.setItem(storage,true);
-                this.className = "pressed";
-                element[1].className = '';
+                this.classList.add('pressed');
+                elements[1].classList.remove('pressed');
             }
-        };
-        element[1].onclick = function(){
+        });
+        elements[1].addEventListener('click', function(event){
             if(localStorage[storage]){
-                playSound('../assets/kick.ogg');
                 localStorage.removeItem(storage);
-                this.className = "pressed";
-                element[0].className = '';
+                playSound('../assets/kick.ogg');
+                this.classList.add('pressed');
+                elements[0].classList.remove('pressed');
             }else {
                 playSound('../assets/bump.ogg');
             }
-        };
+        });
     }
 
-    function mythReset(){
+    function resetData(){
         chrome.alarms.clearAll();
-        chrome.alarms.create("mainLoop", {delayInMinutes: 0.3,periodInMinutes: 1});
-        localStorage.setItem('persist',true);
-        localStorage.setItem('sound',true);
-        localStorage.setItem('notify',true);
-        localStorage.setItem('interval',1);
+        chrome.alarms.create("mainLoop", {
+            delayInMinutes: 1,
+            periodInMinutes: 1
+        });
+        localStorage.setItem('persist', true);
+        localStorage.setItem('sound', true);
+        localStorage.setItem('notify', true);
+        localStorage.setItem('interval', 1);
         playSound('../assets/pow.ogg');
-        setTimeout(function () {
+        setTimeout(function() {
             window.location.reload();
         }, 400);
     }
-}
+
+    for (loop of loopTimers) {
+        configLoopTimers(loop);
+    }
+
+    document.querySelector('#extension-version').appendChild(
+        new Text(chrome.app.getDetails().version)
+    );
+    reset.addEventListener('click', resetData);
+
+});
