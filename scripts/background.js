@@ -1,20 +1,26 @@
 
 // objeto com os dados mais importantes (não persistentes)
-var twitch = {
+var CONFIG = {
     name: 'Cogumelando',
-    username: 'cogumelandooficial',
+    username: 'cogumelando',
     streamTitle: 'LIVE',
     offAirTitle: 'OFF',
     offAirMessage: 'Aguarde e Xonfie',
     notifySfx: '../assets/adanado.ogg',
-    clientId: '8d7703jd1y4lw4s23n7nf71l8l0gmm'
+    clientId: '8d7703jd1y4lw4s23n7nf71l8l0gmm',
+    urls: {
+        twitch: 'http://www.twitch.tv/cogumelando/',
+        facebook: 'https://www.facebook.com/Cogumelando',
+        twitter: 'https://twitter.com/cogumelandosite',
+        site: 'http://www.cogumelando.com.br/'
+    }
 };
 
 // força a desativação do cache do ajax
-$.ajaxSetup({cache:false});
+$.ajaxSetup({cache: false});
 
 // Método que inicializa os dados persistentes
-function mythInit(){
+function backgroundInit(){
     if(localStorage.length == 0){
         // cria os dados persistentes
         localStorage.setItem('persist', true);
@@ -30,8 +36,8 @@ function mythInit(){
                 isClickable:true,
                 iconUrl:"../assets/icon128.png",
                 title:"Cogumelando",
-                message:"Notificações estão ativadas, se quiser desativar entre nas opções."
-            },function(){}
+                message:"Notificações sonoras estão ativadas, você pode desativá-las nas opções."
+            }, function(){}
         );
 
         chrome.notifications.onClicked.addListener(function(notificationId){
@@ -42,37 +48,37 @@ function mythInit(){
 
 // Método que se executa caso o request ajax tenha sucesso
 // @twitchJson: o retorno do request ajax
-function mythTwitch(twitchJson){
+function TwitchResponse(twitchJson){
     // checa se está acontecendo uma live
     if(twitchJson.stream){ // live acontecendo
         // joga todos os dados da live nos dados persistentes
-        localStorage.setItem('channel',JSON.stringify(twitchJson.stream));
+        localStorage.setItem('channel', JSON.stringify(twitchJson.stream));
         // cria um link para o nome do jogo
-        twitch.game = twitchJson.stream.game;
+        CONFIG.game = twitchJson.stream.game;
 
         // faz uma checagem pra saber se no loop anterior já estava em live
         if(!localStorage.onStream){
             // muda o estado de live para true
-            localStorage.setItem('onStream',true);
+            localStorage.setItem('onStream', true);
 
             // se as notificações estiverem ativadas
             if(localStorage.notify){
-                var liveGame = twitch.game != null ? twitch.game : "live";
+                var liveGame = CONFIG.game != null ? CONFIG.game : "live";
 
                 var notificationId = "live";
                 chrome.notifications.create(
                     notificationId,
                     {
-                        type:"basic",
+                        type: "basic",
                         isClickable:true,
-                        iconUrl:"../assets/icon128.png",
-                        title:"ADANADO!!",
-                        message:"É TEMPO! Começando "+liveGame+" ao vivo agora!"
+                        iconUrl: "../assets/icon128.png",
+                        title: "ADANADO!!",
+                        message: "É TEMPO! Começando "+liveGame+" ao vivo agora!"
                     },function(){}
                 );
 
                 chrome.notifications.onClicked.addListener(function(notificationId){
-                    chrome.tabs.create({'url': 'http://www.twitch.tv/cogumelandooficial/'}, function(tab){/*callback*/});
+                    chrome.tabs.create({'url': CONFIG.url}, function(tab){/*callback*/});
                 });
 
             }
@@ -80,41 +86,41 @@ function mythTwitch(twitchJson){
             if (localStorage.sound) {
                 // toca o ADANADO
                 var notify = new Howl({
-                    urls: [twitch.notifySfx]
+                    urls: [CONFIG.notifySfx]
                 }).play();
             }
         }
         // altera as informações do botão
-        var label = twitch.name+' 🎮 '; // 🎮
-        if(twitch.game) label += twitch.game;
-        setBadgeInfo(label, twitch.streamTitle, '#0d0');
+        var label = CONFIG.name+' 🎮 '; // 🎮
+        if(CONFIG.game) label += CONFIG.game;
+        setBadgeInfo(label, CONFIG.streamTitle, '#0d0');
 
     }else{ // canal offline
         // altera o estado de stream pra offline
         localStorage.removeItem('onStream');
         // altera as informações do botão (parecido com o que está acima)
         setBadgeInfo(
-            twitch.name+' ☕ '+twitch.offAirMessage, // ☕
-            twitch.offAirTitle, '#d00'
+            CONFIG.name+' ☕ '+CONFIG.offAirMessage, // ☕
+            CONFIG.offAirTitle, '#d00'
         );
     }
 }
 
 // Método que faz o request ajax no canal do twitch
 // @username: usuário do twitch
-function getTwitch(username, clientid, callback){
+function twitchProcess(username, clientid, callback){
     callback = callback || function () {};
     $.ajax({
         url:'https://api.twitch.tv/kraken/streams/'+username,
         headers: {
             'Client-ID': clientid
         },
-        success:function(channel) {
+        success: function(channel) {
             // método executado se o ajax tiver sucesso
-            mythTwitch(channel);
+            TwitchResponse(channel);
             callback(channel);
         },
-        error:function() {
+        error: function() {
             // método executado caso não tenha sucesso
             // isso pode acontecer caso esteja sem internet
             // ou alguma issue da extensão ou do navegador
@@ -123,13 +129,13 @@ function getTwitch(username, clientid, callback){
     });
 }
 
-function setBadgeInfo(_title, _text, _color){
-    chrome.browserAction.setBadgeText({text:_text});
-    chrome.browserAction.setBadgeBackgroundColor({color: _color});
-    chrome.browserAction.setTitle({title:_title});
+function setBadgeInfo(title, text, color){
+    chrome.browserAction.setBadgeText({text: text});
+    chrome.browserAction.setBadgeBackgroundColor({color: color});
+    chrome.browserAction.setTitle({title: title});
 }
 
 // Método que altera o botão para o caso do ajax falhar
 function noConnect(){
-    setBadgeInfo(twitch.name+' 🔁', '...', '#999'); // 🔁
+    setBadgeInfo(CONFIG.name+' 🔁', '...', '#999'); // 🔁
 }
