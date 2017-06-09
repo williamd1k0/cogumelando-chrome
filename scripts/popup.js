@@ -75,6 +75,7 @@ window.addEventListener('load', function (event) {
     }
 
     function showStreamInfo() {
+        removeLoadingImage();
         // recebe as informações da live
         var stream = JSON.parse(localStorage.channel);
         var liveType = document.getElementsByTagName('img')[0];
